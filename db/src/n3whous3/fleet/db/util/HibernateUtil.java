@@ -7,7 +7,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 public class HibernateUtil {
-	private static final SessionFactory sessionFactory = buildSessionFactory();
 	private static final EntityManagerFactory entityManagerFactory = buildEntityManagerFactory();
 	
 	private static EntityManagerFactory buildEntityManagerFactory() throws ExceptionInInitializerError
@@ -22,23 +21,13 @@ public class HibernateUtil {
 			throw new ExceptionInInitializerError(th);
 		}
 	}
-	private static SessionFactory buildSessionFactory() throws ExceptionInInitializerError {
-		try {
-			// Create the SessionFactory from hibernate.cfg.xml
-			return new Configuration().configure().buildSessionFactory();
-		} catch (Throwable ex) {
-			// TODO message or something somewhere
-			System.out.println("Ajjajj: " + ex.toString());
-			throw new ExceptionInInitializerError(ex);
-		}
-	}
-
-	public static SessionFactory getSessionFactory() {
-		return sessionFactory;
-	}
 	
 	public static EntityManagerFactory getEntityManagerFactory()
 	{
 		return entityManagerFactory;
+	}
+
+	public static void deinitialize() {
+		entityManagerFactory.close();
 	}
 }

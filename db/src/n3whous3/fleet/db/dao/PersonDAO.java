@@ -57,7 +57,7 @@ public class PersonDAO extends BaseDAO
 		}
 	}
 	
-	public static List<Person> getPersonByNamePart(String namePart, int minLength) throws Exception
+	public static List<Person> getPersonsByNamePart(String namePart, int minLength) throws Exception
 	{
 		List<Person> ret = null;
 		if(namePart.length() >= minLength) {
@@ -75,7 +75,7 @@ public class PersonDAO extends BaseDAO
 		return ret;
 	}
 	
-	public static List<Person> getPersonByCardNumPart(String cardNumPart, int minLength) throws Exception
+	public static List<Person> getPersonsByCardNumPart(String cardNumPart, int minLength) throws Exception
 	{
 		List<Person> ret = null;
 		if(cardNumPart.length() >= minLength) {
@@ -93,17 +93,12 @@ public class PersonDAO extends BaseDAO
 		return ret;
 	}
 	
-	public static List<Person> getPersonByPhoneNum(String phoneNumPart, int minLength) throws Exception
+	public static List<Person> getPersonsByPhoneNum(String phoneNumPart, int minLength) throws Exception
 	{
 		List<Person> ret = null;
 		if(phoneNumPart.length() >= minLength) {
 			try {
-				// TODO phonedao can be used here maybe
-				List<Phone> phonesWithNumPartFound = singleTableQuery(Phone.class, new SingleTableQueryCondition<Phone>() {
-					public void body(CriteriaBuilder critBuilder, CriteriaQuery<Phone> criteria, Root<Phone> root) {
-						criteria.where(critBuilder.like(root.get("phone"), "%"+phoneNumPart+"%"));
-					}
-				});
+				List<Phone> phonesWithNumPartFound = PhoneDAO.getPhonesByPhoneNum(phoneNumPart, minLength);
 				// TODO : can be the result nullptr?
 				ret = new ArrayList<Person>(phonesWithNumPartFound.size());
 				for(Phone phoneFound : phonesWithNumPartFound) {
