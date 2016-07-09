@@ -46,11 +46,7 @@ public class PersonDAO extends BaseDAO
 	public static List<Person> getAllPersons() throws Exception
 	{
 		try {
-			return singleTableQuery(Person.class, new SingleTableQueryCondition<Person>() {
-				public void body(CriteriaBuilder critBuilder, CriteriaQuery<Person> criteria, Root<Person> root) {
-					// no extra restriction required for basic query
-				}
-			});
+			return singleTableQuery(Person.class);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			throw e;

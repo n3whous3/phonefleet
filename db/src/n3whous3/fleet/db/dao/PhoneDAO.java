@@ -10,12 +10,6 @@ import n3whous3.fleet.db.entities.Person;
 import n3whous3.fleet.db.entities.Phone;
 
 public class PhoneDAO extends BaseDAO {
-	/*
-	 * - AddPhone(Person person)
-- RemovePhone(Phone phone)
-- GetPhoneByPhoneNum(String phoneNum)
-- GetPhoneByPerson(Person person)
-	 */
 	
 	public static void addPhone(Phone phone) throws Exception
 	{
@@ -40,11 +34,7 @@ public class PhoneDAO extends BaseDAO {
 	public static List<Phone> getAllPhones() throws Exception
 	{
 		try {
-			return singleTableQuery(Phone.class, new SingleTableQueryCondition<Phone>() {
-				public void body(CriteriaBuilder critBuilder, CriteriaQuery<Phone> criteria, Root<Phone> root) {
-					// no extra restriction required for basic query
-				}
-			});
+			return singleTableQuery(Phone.class);
 		} catch (Exception e) {
 			// TODO logging
 			throw e;

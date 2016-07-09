@@ -70,7 +70,9 @@ public class BaseDAO
 			CriteriaQuery<TableObj> criteria = critBuilder.createQuery(tableObjClass);
 			Root<TableObj> rootObj = criteria.from(tableObjClass);
 			criteria.select(rootObj);
-			queryCondition.body(critBuilder, criteria, rootObj);
+			if(queryCondition != null) {
+				queryCondition.body(critBuilder, criteria, rootObj);
+			}
 			TypedQuery<TableObj> typedQuery = manager.createQuery(criteria);
 			// TODO just a few, or iterated lazily, or i don't know
 			return typedQuery.getResultList();
@@ -81,5 +83,9 @@ public class BaseDAO
 			// TODO: are you sure, that this will be done if return was done above?
 			if(manager != null) manager.close();
 		}
+	}
+	
+	protected static <TableObj> List<TableObj> singleTableQuery(Class<TableObj> tableObjClass) throws Exception {
+		return singleTableQuery(tableObjClass, null);
 	}
 }

@@ -3,9 +3,6 @@ package n3whous3.fleet.db.util;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-
 public class HibernateUtil {
 	private static final EntityManagerFactory entityManagerFactory = buildEntityManagerFactory();
 	
