@@ -19,6 +19,10 @@ public class PaymentDAO extends BaseDAO {
 		removeObject(payment);
 	}
 	
+	public static void removeAllPaymentsByPhone(Phone phone) throws Exception {
+		removeObjects(getPaymentsByPhone(phone));
+	}
+	
 	public static List<Payment> getAllPayments() throws Exception {
 		return singleTableQuery(Payment.class);
 	}

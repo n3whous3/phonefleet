@@ -62,6 +62,24 @@ public class BaseDAO
 		}
 	}
 	
+	protected static <Obj> void removeObjects(List<Obj> objectsToRemove) throws Exception {
+		EntityManager manager = null;
+		try {
+			manager = HibernateUtil.getEntityManagerFactory().createEntityManager();
+			manager.getTransaction().begin();
+			// TODO: maybe not the best idea, if we updated its data
+			for(Obj obj : objectsToRemove) {
+				manager.remove(manager.contains(obj) ? obj : manager.merge(obj));
+			}
+			manager.getTransaction().commit();
+		} catch (Exception e) {
+			if(manager != null) manager.getTransaction().rollback();
+			throw e;
+		} finally {
+			if(manager != null) manager.close();
+		}
+	}
+	
 	protected static <TableObj> List<TableObj> singleTableQuery(Class<TableObj> tableObjClass, SingleTableQueryCondition<TableObj> queryCondition) throws Exception {
 		EntityManager manager = null;
 		try {
