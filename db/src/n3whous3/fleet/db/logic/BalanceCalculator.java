@@ -4,9 +4,11 @@ import java.sql.Date;
 
 import n3whous3.fleet.db.dao.InvoiceDAO;
 import n3whous3.fleet.db.dao.PaymentDAO;
+import n3whous3.fleet.db.dao.StaticInfoDAO;
 import n3whous3.fleet.db.entities.Invoice;
 import n3whous3.fleet.db.entities.Payment;
 import n3whous3.fleet.db.entities.Phone;
+import n3whous3.fleet.db.entities.StaticInfo;
 
 public class BalanceCalculator {
 	
@@ -27,6 +29,35 @@ public class BalanceCalculator {
 			ret.monthlyFee -= paym.getPayment_monthly_fee();
 		}
 		return ret;
+	}
+	
+	/**
+	 * Calculates the required payment at the given date. The required payment goes the following:
+	 * - This calculates the balance first. Positive balance is ignored in any case of Values structure
+	 * - Any negative balance is shown as a positive value in the returned structure (person has to pay it)
+	 * - Monthly membership fee is a different case. If the person has negative balance, the required payment
+	 *   is not the minimum monthly fee, but the negative balance value and at most, StaticInfo's threshold value.
+	 *   So if the monthly fee is 300 per user and the user has -1400 monthly fee balance, and the monthly membership
+	 *   fee threshold is 1000, then he/she has to pay 1000. If he/she has "only" -500, then 500.
+	 * @param untilDate Calculated only until this date
+	 * @return The fees has to be payed (membership and phone debt)
+	 * @throws Exception
+	 */
+	public Values calculateRequiredPayment(Date untilDate) throws Exception {
+		Values balance = calculateBalance(untilDate);
+		balance.phoneDebt *= -1;
+		balance.monthlyFee *= -1;
+		if(balance.phoneDebt < 0) {
+			balance.phoneDebt = 0;
+		}
+		if(balance.monthlyFee < 0) {
+			balance.monthlyFee = 0;
+		}
+		StaticInfo si = StaticInfoDAO.getLastStaticInfo(untilDate);
+		if(balance.monthlyFee > 0 && balance.monthlyFee > si.getMembership_fee_threshold()) {
+				balance.monthlyFee = si.getMembership_fee_threshold();
+		}
+		return balance;
 	}
 	
 	private Phone phone;
