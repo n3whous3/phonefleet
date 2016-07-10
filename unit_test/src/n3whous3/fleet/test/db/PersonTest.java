@@ -1,4 +1,4 @@
-package n3whous3.fleet.test;
+package n3whous3.fleet.test.db;
 
 import org.junit.Test;
 import org.junit.runners.MethodSorters;

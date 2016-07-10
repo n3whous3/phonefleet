@@ -1,8 +1,9 @@
-package n3whous3.fleet.test;
+package n3whous3.fleet.test.db;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
@@ -59,6 +60,13 @@ public class PhoneTest {
 			PhoneDAO.removePhone(phone);
 		}
 		Assert.assertEquals(0, PhoneDAO.getAllPhones().size());
+	}
+	
+	@AfterClass
+	public static void tearDown() throws Exception {
+		for(Person p : PersonDAO.getAllPersons()) {
+			PersonDAO.removePerson(p);
+		}
 	}
 	
 }
