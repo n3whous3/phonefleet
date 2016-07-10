@@ -44,4 +44,5 @@ public class PhoneDAO extends BaseDAO {
 		assert phones.size() < 2;
 		return phones.isEmpty() ? null : phones.get(0);
 	}
+
 }

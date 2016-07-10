@@ -37,4 +37,13 @@ public class Phone
 	public void setPerson(Person person) {
 		this.person = person;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Phone) {
+			Phone phoneOther = (Phone) obj;
+			return person.equals(phoneOther.person) && phone.equals(phoneOther.phone);
+		}
+		return false;
+	}
 }

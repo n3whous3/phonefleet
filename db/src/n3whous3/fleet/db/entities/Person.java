@@ -72,4 +72,17 @@ public class Person {
 	public Phone getPhone() {
 		return phone;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Person) {
+			Person personOther = (Person) obj;
+			return id == personOther.id
+						&& card_num.equals(personOther.card_num)
+						&& name.equals(personOther.name)
+						&& email.equals(personOther.email)
+						&& address.equals(personOther.address);
+		}
+		return false;
+	}
 }
