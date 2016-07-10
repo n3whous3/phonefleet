@@ -20,15 +20,19 @@ public class Payment {
 	private Date validity_date;
 	
 	@Column(nullable=false)
-	private int payment_value;
+	private int payment_bill;
+	
+	@Column(nullable=false)
+	private int payment_monthly_fee;
 	
 	
 	public Payment() {}
-	public Payment(Phone phone, Date validity_date, int payment_value)
+	public Payment(Phone phone, Date validity_date, int payment_bill, int payment_monthly_fee)
 	{
 		this.phone = phone;
 		this.validity_date = validity_date;
-		this.payment_value = payment_value;
+		this.payment_bill = payment_bill;
+		this.payment_monthly_fee = payment_monthly_fee;
 	}
 	public long getId()
 	{
@@ -54,12 +58,20 @@ public class Payment {
 	{
 		this.validity_date = validity_date;
 	}
-	public int getPayment_value()
+	public int getPayment_bill()
 	{
-		return payment_value;
+		return payment_bill;
 	}
-	public void setPayment_value(int payment_value)
+	public void setPayment_bill(int payment_bill)
 	{
-		this.payment_value = payment_value;
+		this.payment_bill = payment_bill;
+	}
+	public int getPayment_monthly_fee()
+	{
+		return payment_monthly_fee;
+	}
+	public void setPayment_monthly_fee(int payment_monthly_fee)
+	{
+		this.payment_monthly_fee = payment_monthly_fee;
 	}
 }
